@@ -1,5 +1,10 @@
 # Atomex.tz
-Atomex protocol implementation for Tezos blockchain
+[![tezos mainnet](https://img.shields.io/badge/tezos-mainnet-blue.svg)](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL/operations)
+[![made_with michelson](https://img.shields.io/badge/made_with-michelson-red.svg)](https://tezos.gitlab.io/whitedoc/michelson.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Atomex protocol implementation for Tezos blockchain  
+  
 [![Atomex](https://miro.medium.com/max/995/0*qHL-RBfdKopwUdMS)](https://medium.com/coinmonks/atomex-cross-chain-atomic-swaps-on-practice-8139571f0ee5)
 
 ## What is Atomex
