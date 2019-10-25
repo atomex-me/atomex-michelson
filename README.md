@@ -5,9 +5,10 @@
 
 Atomex protocol implementation for Tezos blockchain  
   
-[![Atomex](https://miro.medium.com/max/995/0*qHL-RBfdKopwUdMS)](https://medium.com/coinmonks/atomex-cross-chain-atomic-swaps-on-practice-8139571f0ee5)
-
 ## What is Atomex
+
+[![Atomex](https://miro.medium.com/max/995/0*qHL-RBfdKopwUdMS)](https://medium.com/coinmonks/atomex-cross-chain-atomic-swaps-on-practice-8139571f0ee5)  
+
 [Atomex](https://atomex.me/) is a multicurrency HD wallet with built-in hybrid atomic swap exchange. It combines advantages of centralized and decentralized exchanges:
 * Your funds are always secure
 * There are no additional fees except transaction fee
