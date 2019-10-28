@@ -12,11 +12,13 @@ install:
   - pip install pytest
   - pip install git+https://github.com/baking-bad/pytezos.git@feature/cli
 
-script:
-  - pytest . -v
+stages:
+  - test
+  - deploy
 
-deploy:
-  #on:
-  #  branch: master
-  script:
-    - pytezos deploy src/atomex.tz --github-repo-slug="$TRAVIS_REPO_SLUG" --github-oauth-token="$GH_TOKEN"
+jobs:
+  include:
+    - stage: test
+      script: pytest . -v
+    - stage: deploy
+      script: pytezos deploy src/atomex.tz --github-repo-slug="$TRAVIS_REPO_SLUG" --github-oauth-token="$GH_TOKEN"
