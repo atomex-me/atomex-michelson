@@ -1,6 +1,6 @@
 # Atomex.tz
-[![tezos mainnet](https://img.shields.io/badge/tezos-mainnet-blue.svg)](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL/operations)
-[![made_with michelson](https://img.shields.io/badge/made_with-michelson-red.svg)](https://tezos.gitlab.io/whitedoc/michelson.html)
+[![Build Status](https://travis-ci.org/atomex-me/atomex-michelson.svg?branch=master)](https://travis-ci.org/atomex-me/atomex-michelson)
+[![tezos mainnet](https://img.shields.io/badge/tezos-mainnet-blue.svg)](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Atomex protocol implementation for Tezos blockchain  
@@ -17,8 +17,8 @@ Atomex protocol implementation for Tezos blockchain
 * Trading APIs for wallets/traders
 
 ## Deployed contracts
-* Tezos mainnet: [KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL/operations)
-* Tezos babylonnet: [KT1Fc7XHbZhpd8wkYvzSJnAj37GxNyqSsHhZ](https://better-call.dev/babylon/KT1Fc7XHbZhpd8wkYvzSJnAj37GxNyqSsHhZ/operations)
+* Tezos mainnet: [KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL)
+* Tezos babylonnet: [KT1Fc7XHbZhpd8wkYvzSJnAj37GxNyqSsHhZ](https://better-call.dev/babylon/KT1Fc7XHbZhpd8wkYvzSJnAj37GxNyqSsHhZ)
 
 ## Resources
 Latest version of desktop client is available at [atomex.me](https://atomex.me)
