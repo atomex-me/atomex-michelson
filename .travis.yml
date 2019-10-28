@@ -9,8 +9,7 @@ cache:
 install:
   - sudo apt-get update -q
   - sudo apt-get install libsodium-dev -y
-  - pip install pytest
-  - pip install git+https://github.com/baking-bad/pytezos.git@feature/cli
+  - pip install pytest pytezos
 
 stages:
   - test
