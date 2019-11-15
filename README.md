@@ -1,7 +1,7 @@
 # Atomex.tz
 [![Build Status](https://travis-ci.org/atomex-me/atomex-michelson.svg?branch=master)](https://travis-ci.org/atomex-me/atomex-michelson)
 [![tezos mainnet](https://img.shields.io/badge/tezos-mainnet-blue.svg)](https://better-call.dev/main/KT1VG2WtYdSWz5E7chTeAdDPZNy2MpP8pTfL)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 Atomex protocol implementation for Tezos blockchain  
   
