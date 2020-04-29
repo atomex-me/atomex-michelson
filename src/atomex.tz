@@ -23,25 +23,29 @@ code {
        UNPAPAIR @% @% @%; DIP {DUP};
        IF_LEFT
          {
-           IF_LEFT
-             {
+           IF_LEFT  
+             { # Initiate swap
+               # Check swap params
                UNPAIR @% @%;
-               DUP; CONTRACT @participant unit; IF_SOME {DROP} { PUSH string "wrong participant address"; FAILWITH };
+               DUP; CONTRACT @participant unit; IF_SOME {DROP} { PUSH string "participant address doesn't exist or has unsupported type"; FAILWITH };
                SWAP; UNPPAIIR @% @% @%;
-               DUP; SIZE; PUSH nat 32; IFCMPEQ {} {PUSH string "hash size is not correct"; FAILWITH };
+               DUP; SIZE; PUSH nat 32; IFCMPEQ {} {PUSH string "hash size doesn't equal 32 bytes"; FAILWITH };
                DIP
                  {
-                   DUP; NOW; IFCMPLT {} { PUSH string "wrong refund_time"; FAILWITH };
+                   DUP; NOW; IFCMPLT {} { PUSH string "refund_time has already come"; FAILWITH };
                    DIP { DUP }; SWAP;
-                   AMOUNT @amount; SUB;
-                   SOURCE;
-                   DUP; CONTRACT @initiator unit; IF_SOME {DROP} { PUSH string "wrong sender address"; FAILWITH };
-                   DIP { PPAIIR; SWAP; }; PPAIIR; SOME @xcat;
+                   # Substract the payoff
+                   AMOUNT @amount; SUB;  
+                   # Check sender
+                   SENDER;
+                   DUP; CONTRACT @initiator unit; IF_SOME {DROP} { PUSH string "sender address doesn't exist or has unsupported type"; FAILWITH };
+                   # Check if swap for such hash already exists
+                   DIP { PPAIIR; SWAP; }; PPAIIR; SOME @xcat; 
                    SWAP;
                  };
                DUP; DIP { MEM; NOT; IF {} {PUSH string "swap for this hash is already initiated"; FAILWITH} };
              }
-             {
+             { # Add funds to an existing swap
                DUP;
                DIP
                  {
@@ -49,9 +53,11 @@ code {
                    UNPAIR @% @%; 
                    DIP
                      {
+                       # Check if swap is expired
                        UNPPAIIR @% @% @%; SWAP; 
-                       DUP; NOW; IFCMPLT {} { PUSH string "refund_time has already come"; FAILWITH }; SWAP;
-                       AMOUNT @amount; ADD;
+                       DUP; NOW; IFCMPLT {} { PUSH string "refund_time has already come"; FAILWITH }; SWAP;  
+                       # Add funds
+                       AMOUNT @amount; ADD;  
                      };
                    PAPPAIIR; SOME @xcat;
                  };
@@ -60,44 +66,54 @@ code {
          }
          {
            IF_LEFT
-             {
+             { # Redeem swap
                PUSH mutez 0; AMOUNT; IFCMPEQ {} {PUSH string "can not accept tez"; FAILWITH };
-               DUP; SIZE; PUSH nat 32; IFCMPEQ {} {PUSH string "secret size is not correct"; FAILWITH };
-               SHA256; SHA256 @hash; DUP; DIP {SWAP};
+               DUP; SIZE; PUSH nat 32; IFCMPEQ {} {PUSH string "secret size doesn't equal 32 bytes"; FAILWITH };  
+               # Check if secret matches the hash
+               SHA256; SHA256 @hash; DUP; DIP {SWAP}; 
                DIIP 
                  {
-                   GET; IF_SOME {} { PUSH string "no swap for such secret"; FAILWITH };
+                   GET; IF_SOME {} { PUSH string "no swap for such secret"; FAILWITH }; 
+                   # check participant 
                    DUP; UNPAIR @% @%; CDR @%; CONTRACT @participant unit; IF_SOME {} { PUSH string "recipient does not exist"; FAILWITH };
                    SWAP; CAAR @%;
                    DIIP
                      {
-                       SOURCE;
+                       # Check sender
+                       SENDER;
                        CONTRACT @sender unit; IF_SOME {} { PUSH string "wrong sender address"; FAILWITH };
-                       SWAP; CDR @%; UNPPAIIR @% @% @%; DROP;
+                       # Check if swap is expired
+                       SWAP; CDR @%; UNPPAIIR @% @% @%; DROP;  
                        NOW; IFCMPLT {} { PUSH string "refund_time has already come"; FAILWITH };
-                       DUP; PUSH mutez 0;
+                       # Check if amount is positive
+                       DUP; PUSH mutez 0;  
                        IFCMPLT
-                         {
+                         { # Add transfer operation to the operation list if amount is positive
                            UNIT; TRANSFER_TOKENS;
                            DIP {SWAP}; CONS;
                          }
-                         {
+                         { # Skip otherwise
                            DROP; DROP; SWAP
                          };
                      };
                    UNIT; TRANSFER_TOKENS;
                  };
              }
-             {
+             { # Refund swap
                PUSH mutez 0; AMOUNT; IFCMPEQ {} {PUSH string "can not accept tez"; FAILWITH };
                DUP;
                DIP
                  {
+                   # Check if swap with such hash exists
                    GET; IF_SOME {} { PUSH string "no swap for such hash"; FAILWITH };
+                   # Check initiator
                    DUP; CAAR @%; CONTRACT @initiator unit; IF_SOME {} { PUSH string "recipient does not exist"; FAILWITH }; SWAP; 
+           # Check if refund_time has come
                    CDR; UNPPAIIR @% @% @%; SWAP;
                    NOW; IFCMPGE {} { PUSH string "refund_time has not come"; FAILWITH };
+                   # add payoff back to the amount
                    ADD;
+                   # Add transfer operation
                    UNIT; TRANSFER_TOKENS; SWAP;
                    DIIP {SWAP};
                  };
