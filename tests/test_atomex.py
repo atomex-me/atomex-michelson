@@ -43,7 +43,6 @@ class AtomexContractTest(TestCase):
             }
         }
         self.assertDictEqual(big_map_diff, res.big_map_diff)
-        self.assertEqual(empty_storage, res.storage)
         self.assertEqual([], res.operations)
 
     def test_initiate_proxy(self):
@@ -61,7 +60,7 @@ class AtomexContractTest(TestCase):
 
         big_map_diff = {
             hashed_secret: {
-                'initiator': source,
+                'initiator': proxy,
                 'participant': party,
                 'amount': Decimal('0.98'),
                 'refund_time': format_timestamp(now + 6 * 3600),
@@ -69,7 +68,6 @@ class AtomexContractTest(TestCase):
             }
         }
         self.assertDictEqual(big_map_diff, res.big_map_diff)
-        self.assertEqual(empty_storage, res.storage)
         self.assertEqual([], res.operations)
 
     def test_initiate_same_secret(self):
