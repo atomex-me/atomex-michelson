@@ -11,14 +11,14 @@ install:
   - sudo apt-get install libsodium-dev -y
   - pip install pytest pytezos
 
-stages:
-  - test
-  - name: deploy
-    if: (branch = master) AND (tag IS present)
+script:
+  - pytest . -v
 
-jobs:
-  include:
-    - stage: test
-      script: pytest . -v
-    - stage: deploy
-      script: pytezos deploy src/atomex.tz --github-repo-slug="$TRAVIS_REPO_SLUG" --github-oauth-token="$GH_TOKEN"
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: pytezos deploy $TRAVIS_BUILD_DIR/src/atomex.tz --github-repo-slug="$TRAVIS_REPO_SLUG" --github-oauth-token="$GH_TOKEN"
+  on:
+    branch: master
+    tags: true
+
